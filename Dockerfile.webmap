@@ -1,0 +1,10 @@
+FROM --platform=linux/amd64 ubuntu:20.04
+WORKDIR /webmap
+RUN apt update && apt upgrade -y
+RUN apt install -y curl zip
+RUN curl -o webmap.zip -L "https://github.com/FreeTAKTeam/FreeTAKHub/releases/download/v0.2.5/FTH-webmap-linux-0.2.5.zip"  \
+    && unzip webmap.zip \
+    && rm -rf webmapzip \
+    && chmod +x FTH-*
+
+ENTRYPOINT ["FTH-webmap-linux-0.2.5", "config.json"]

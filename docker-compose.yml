@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  fts:
+    build:
+      context: .
+      dockerfile: Dockerfile.fts
+    #command:
+    #  - "-UI"
+    #  - "True"
+    volumes:
+      - "./fts:/opt/fts"
+      - "./fts/installation.json:/usr/local/lib/python3.8/dist-packages/FreeTAKServer/core/configuration/installation.json"
+    ports:
+      # DataPackagePort
+      # EXPOSE 8080
+      # CoTPort
+      # EXPOSE 8087
+      # SSLCoTPort
+      - "8089:8089"
+      # SSLDataPackagePort
+      #EXPOSE 8443
+      # FederationPort
+      #EXPOSE 9000
+      # APIPort
+      - "19023:19023"
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.fts
+    working_dir: "/usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/"
+    entrypoint: python3 run.py
+    volumes:
+      - "./ui/config.py:/usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py"
+      - "./ui:/opt/ui"
+      - "./fts:/opt/fts"
+
+    ports:
+      - "5001:5000"
+
+  webmap:
+    build:
+      context: .
+      dockerfile: Dockerfile.webmap
+    volumes:
+      - "./webmap/config.json:/webmap/config.json"
+    ports:
+      - "8000:8000"
