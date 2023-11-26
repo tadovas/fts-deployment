@@ -9,6 +9,7 @@ services:
     #  - "True"
     volumes:
       - "./fts:/opt/fts"
+    # uncomment after running ./setup.sh to avoid getting first time run again
       - "./fts/installation.json:/usr/local/lib/python3.8/dist-packages/FreeTAKServer/core/configuration/installation.json"
     ports:
       # DataPackagePort
