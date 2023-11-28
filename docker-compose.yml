@@ -27,13 +27,10 @@ services:
   ui:
     build:
       context: .
-      dockerfile: Dockerfile.fts
-    working_dir: "/usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/"
-    entrypoint: python3 run.py
+      dockerfile: Dockerfile.ui
     volumes:
-      - "./ui/config.py:/usr/local/lib/python3.8/dist-packages/FreeTAKServer-UI/config.py"
-      - "./ui:/opt/ui"
-      - "./fts:/opt/fts"
+      - "./ui/config.py:/fts-ui/FreeTAKServer-UI/config.py"
+      - "./ui:/opt/fts-ui"
 
     ports:
       - "5001:5000"
