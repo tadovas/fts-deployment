@@ -6,15 +6,18 @@ RUN apt update && apt upgrade -y
 
 # prerequisited
 RUN apt install -y  python3 && apt install -y python3-pip
-RUN apt install -y python3-dev python3-setuptools build-essential python3-gevent python3-lxml libcairo2-dev
+RUN apt install -y python3-dev python3-setuptools build-essential python3-gevent python3-lxml libcairo2-dev git
 
-# python libs
-RUN pip3 install wheel pycairo requests
+RUN mkdir -p /fts-server  && mkdir -p /root/.ssh && mkdir -p /opt/fts
 
-# main packages
-RUN python3 -m pip install FreeTAKServer
+VOLUME "/opt/fts"
+WORKDIR "/fts-server"
 
-# check installation
-RUN pip check FreeTakServer
+
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN git clone --depth 1 https://github.com/tadovas/FreeTakServer.git .
+
+RUN pip install -e /fts-server
+
 
 ENTRYPOINT [ "python3", "-m", "FreeTAKServer.controllers.services.FTS"]
