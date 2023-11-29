@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.fts
+      #dockerfile: Dockerfile.fts.release
     restart: always
     #command:
     #  - "-UI"
@@ -12,6 +13,7 @@ services:
       - "./fts:/opt/fts"
     # uncomment after running ./setup.sh to avoid getting first time run again
       - "./fts/fts_installation_completed.json:/fts-server/FreeTAKServer/core/configuration/installation.json"
+    # - "./fts/fts_installation_completed.json:/usr/local/lib/python3.8/dist-packages/FreeTAKServer/core/configuration/installation.json"
     environment:
       # a bug in FTS causes config file to be skipped if not explicitly defined
       - "FTS_CONFIG_PATH=/opt/fts/FTSConfig.yaml"
