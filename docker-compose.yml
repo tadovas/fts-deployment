@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.fts
+    restart: always
     #command:
     #  - "-UI"
     #  - "True"
@@ -28,6 +29,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ui
+    restart: always
     volumes:
       - "./ui/config.py:/fts-ui/FreeTAKServer-UI/config.py"
       - "./ui:/opt/fts-ui"
@@ -39,6 +41,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.webmap
+    restart: always
     volumes:
       - "./webmap/config.json:/webmap/config.json"
     ports:
