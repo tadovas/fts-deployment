@@ -7,4 +7,4 @@ RUN curl -o webmap.zip -L "https://github.com/FreeTAKTeam/FreeTAKHub/releases/do
     && rm -rf webmapzip \
     && chmod +x FTH-*
 
-ENTRYPOINT ["FTH-webmap-linux-0.2.5", "config.json"]
+ENTRYPOINT ["./FTH-webmap-linux-0.2.5", "config.json"]
