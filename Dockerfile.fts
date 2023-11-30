@@ -1,12 +1,11 @@
-FROM ubuntu:20.04
+FROM python:3.11.6-bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt upgrade -y
 
 # prerequisited
-RUN apt install -y  python3 && apt install -y python3-pip
-RUN apt install -y python3-dev python3-setuptools build-essential python3-gevent python3-lxml libcairo2-dev git
+RUN apt install -y git
 
 RUN mkdir -p /fts-server  && mkdir -p /root/.ssh && mkdir -p /opt/fts
 
@@ -15,9 +14,17 @@ WORKDIR "/fts-server"
 
 
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-RUN git clone --depth 1 https://github.com/tadovas/FreeTakServer.git .
+
+ENV FTS_REPO="https://github.com/FreeTAKTeam/FreeTakServer.git"
+ENV FTS_TAG=2.1
+
+RUN git clone --depth 1 --branch ${FTS_TAG} ${FTS_REPO} .
+
+RUN pip install ruamel-yaml
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install -e /fts-server
 
 
-ENTRYPOINT [ "python3", "-m", "FreeTAKServer.controllers.services.FTS"]
+ENTRYPOINT [ "python", "-m", "FreeTAKServer.controllers.services.FTS"]
